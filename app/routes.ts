@@ -13,11 +13,11 @@ import {
   setRelayConnection,
 } from './lib/relay.js'
 import { broadcast as sseBroadcast, createSseStream } from './lib/sse.js'
+import { appUrl } from './lib/app-url.js'
 import { rootView } from './root-view.js'
 
 const MAX_BODY_BYTES = 1_048_576
 const MAX_REQUESTS = 100
-const appUrl = () => process.env.APP_URL ?? 'http://localhost:3000'
 
 const app = new Hono()
 const nodeWs = createNodeWebSocket({ app })

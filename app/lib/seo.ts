@@ -1,3 +1,5 @@
+import { appUrl } from './app-url.js'
+
 const siteName = 'Hooklens'
 
 const defaultTitle = `${siteName} - Inspect, debug, and replay webhooks`
@@ -5,7 +7,7 @@ const defaultDescription =
   'Inspect, debug, replay, and test webhooks locally and in production. Capture events instantly and forward to localhost without ngrok.'
 
 export function siteUrl() {
-  return (process.env.APP_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+  return appUrl()
 }
 
 export function seoForPage(component: string) {

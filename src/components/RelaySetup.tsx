@@ -27,7 +27,7 @@ export function RelaySetup({
 }: RelaySetupProps) {
   const command = useMemo(() => {
     const base = `npx @hooklens/cli --endpoint ${endpointId} --port ${port || '4000'}`
-    if (appUrl && appUrl !== 'http://localhost:3000') {
+    if (appUrl && !/^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(appUrl)) {
       return `${base} --url ${appUrl}`
     }
     return base
