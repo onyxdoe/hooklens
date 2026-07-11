@@ -32,7 +32,7 @@ It shows up in the dashboard instantly.
 In the dashboard, copy the relay command and run it in your project terminal:
 
 ```bash
-pnpm hooklens -- --endpoint YOUR_ENDPOINT_ID --port 4000
+npx @hooklens/cli --endpoint YOUR_ENDPOINT_ID --port 4000
 ```
 
 When the dot turns green, you can replay and auto-forward to your local app.
@@ -42,4 +42,4 @@ When the dot turns green, you can replay and auto-forward to your local app.
 - `pnpm dev` — start the app
 - `pnpm build` / `pnpm start` — production
 - `pnpm db:generate` / `pnpm db:migrate` — schema changes
-- `pnpm hooklens` — run the relay CLI locally
+- `pnpm hooklens` — run the relay CLI locally (from repo root)

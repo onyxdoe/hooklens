@@ -26,7 +26,7 @@ export function RelaySetup({
   onPathChange,
 }: RelaySetupProps) {
   const command = useMemo(() => {
-    const base = `npx hooklens --endpoint ${endpointId} --port ${port || '4000'}`
+    const base = `npx @hooklens/cli --endpoint ${endpointId} --port ${port || '4000'}`
     if (appUrl && appUrl !== 'http://localhost:3000') {
       return `${base} --url ${appUrl}`
     }
