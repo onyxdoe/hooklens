@@ -1,8 +1,11 @@
 import { Link } from '@inertiajs/react'
+import { siGithub } from 'simple-icons'
 import { IntegrationMarquee } from '@/components/IntegrationMarquee'
 import { Logo } from '@/components/Logo'
 import { WebhookPreview } from '@/components/WebhookPreview'
 import { Button } from '@/components/ui/form/Button'
+
+const githubUrl = 'https://github.com/onyxdoe/hooklens'
 
 export default function Home() {
   return (
@@ -14,9 +17,22 @@ export default function Home() {
           <Link href="/">
             <Logo />
           </Link>
-          <Link href="/start">
-            <Button pill>Get a webhook URL →</Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/start" className="hidden sm:inline-block">
+              <Button pill>Get a webhook URL →</Button>
+            </Link>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Hooklens on GitHub"
+              className="rounded-md p-1 text-zinc-400 transition-colors hover:text-zinc-100"
+            >
+              <svg role="img" viewBox="0 0 24 24" aria-hidden="true" className="size-6">
+                <path d={siGithub.path} fill="currentColor" />
+              </svg>
+            </a>
+          </div>
         </div>
       </header>
 
