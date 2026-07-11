@@ -16,6 +16,7 @@ const baseUrl = getArg('url') ?? 'http://localhost:3000'
 
 if (!endpointId) {
   console.error('Usage: hooklens --endpoint <id> [--port 4000] [--url http://localhost:3000]')
+  console.error('       npx @hooklens/cli --endpoint <id> [--port 4000] [--url http://localhost:3000]')
   process.exit(1)
 }
 

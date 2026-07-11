@@ -1,12 +1,15 @@
 {
-  "name": "hooklens",
+  "name": "@hooklens/cli",
   "version": "0.1.0",
   "description": "Localhost relay for Hooklens webhook debugging",
   "type": "module",
   "bin": {
-    "hooklens": "./dist/index.js"
+    "hooklens": "dist/index.js"
   },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "pnpm run build"
