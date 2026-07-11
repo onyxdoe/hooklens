@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.bg-grid-shell {
+  position: relative;
+  background-color: #09090b;
+}
+
+.bg-grid-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 100% 72px;
+  pointer-events: none;
+}
+
+.bg-grid-frame {
+  background-image: linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 72px 100%;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}

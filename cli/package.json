@@ -1,0 +1,21 @@
+{
+  "name": "hooklens",
+  "version": "0.1.0",
+  "description": "Localhost relay for Hooklens webhook debugging",
+  "type": "module",
+  "bin": {
+    "hooklens": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.8.3"
+  }
+}

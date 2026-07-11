@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["app/**/*.ts", "app/**/*.tsx"],
+  "exclude": ["app/pages/**", "app/root-view.tsx", "app/pages.gen.ts"]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "hooklens-server",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "tsx watch app/main.tsx",
+    "build": "vite build && tsc -p tsconfig.server.json",
+    "start": "NODE_ENV=production node dist/app/main.js",
+    "hooklens": "tsx cli/src/index.ts",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@hono/inertia": "^0.2.0",
+    "@hono/node-server": "^1.14.4",
+    "@hono/node-ws": "^1.1.0",
+    "@inertiajs/react": "^2.0.0",
+    "@libsql/client": "^0.14.0",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "drizzle-orm": "^0.44.2",
+    "hono": "^4.8.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "simple-icons": "^16.25.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.15.32",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "drizzle-kit": "^0.31.1",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.0",
+    "vite-ssr-components": "^0.6.1"
+  }
+}
