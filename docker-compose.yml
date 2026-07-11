@@ -1,0 +1,12 @@
+services:
+  hooklens:
+    build: .
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    env_file:
+      - .env
+    volumes:
+      - hooklens-data:/app/data
+
+volumes:
+  hooklens-data:

@@ -1,0 +1,16 @@
+node_modules
+dist
+cli/dist
+cli/node_modules
+data
+.git
+.env
+.env.*
+!.env.example
+*.db
+*.db-journal
+*.log
+.DS_Store
+.cursor
+.vite
+*.tsbuildinfo

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch app/main.tsx",
     "build": "vite build && tsc -p tsconfig.server.json",
-    "start": "NODE_ENV=production node dist/app/main.js",
+    "start": "NODE_ENV=production node dist/main.js",
     "hooklens": "tsx cli/src/index.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
