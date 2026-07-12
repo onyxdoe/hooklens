@@ -17,7 +17,7 @@ pnpm db:migrate
 pnpm dev
 ```
 
-Open [localhost:3000](http://localhost:3000), click **Get a webhook URL**, and send something:
+Open [https://hooklens.pxxl.run], click **Get a webhook URL**, and send something:
 
 ```bash
 curl -X POST http://localhost:3000/h/YOUR_ENDPOINT_ID \
