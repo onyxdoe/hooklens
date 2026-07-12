@@ -14,6 +14,8 @@ import {
 } from './lib/relay.js'
 import { broadcast as sseBroadcast, createSseStream } from './lib/sse.js'
 import { appUrl } from './lib/app-url.js'
+import { getClientIp } from './lib/client-ip.js'
+import { checkRateLimit } from './lib/rate-limit.js'
 import { rootView } from './root-view.js'
 
 const MAX_BODY_BYTES = 1_048_576
@@ -92,6 +94,7 @@ async function captureRequest(c: Context, endpointId: string) {
     query[key] = value
   })
 
+  const clientIp = getClientIp(c)
   const inserted = await db
     .insert(requests)
     .values({
@@ -101,7 +104,7 @@ async function captureRequest(c: Context, endpointId: string) {
       query: JSON.stringify(query),
       body: bodyText,
       contentType: c.req.header('content-type') ?? null,
-      clientIp: c.req.header('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+      clientIp: clientIp === 'unknown' ? null : clientIp,
       userAgent: c.req.header('user-agent') ?? null,
       sizeBytes: bodyText?.length ?? 0,
       latencyMs,
@@ -147,6 +150,18 @@ async function runAutoForward(endpointId: string, requestId: string, forwardUrl:
 app.get('/', (c) => c.render('home', { appUrl: appUrl() }))
 
 app.get('/start', async (c) => {
+  c.header('Cache-Control', 'no-store')
+
+  const ip = getClientIp(c)
+  const limit = checkRateLimit(`create:${ip}`)
+  if (!limit.ok) {
+    c.header('Retry-After', String(limit.retryAfterSec))
+    return c.text(
+      `Too many webhook URLs created. Try again in ${limit.retryAfterSec}s.`,
+      429,
+    )
+  }
+
   const inserted = await db.insert(endpoints).values({ forwardEnabled: false }).returning()
   return c.redirect(`/h/${inserted[0].id}`)
 })
