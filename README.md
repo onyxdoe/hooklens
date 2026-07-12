@@ -1,14 +1,19 @@
 # Hooklens
 
-**Stop fighting your webhooks.**
+Stop fighting your webhooks.
 
-The easiest way to inspect, debug, replay, and test webhooks locally and in production.
+Hooklens helps you inspect, debug, replay, and test webhooks in one place.
 
-No localtunnel or ngrok needed to receive webhooks while developing locally. Inspect every event and replay to your localhost as many times as you want.
+- Create a webhook URL in one click
+- See every request live (headers, body, timing)
+- Replay past events on demand
+- Auto-forward new events to localhost with the relay CLI
 
-Built for the webhooks you already use — Stripe, GitHub, Clerk, Paystack, Resend, Lemon Squeezy.
+Built for Stripe, GitHub, Clerk, Paystack, Resend, Lemon Squeezy, and any webhook source.
 
-## Run it
+## Quick start (local dev)
+
+### 1) Install and run
 
 ```bash
 pnpm install
@@ -17,7 +22,17 @@ pnpm db:migrate
 pnpm dev
 ```
 
-Open [https://hooklens.pxxl.run], click **Get a webhook URL**, and send something:
+Open [http://localhost:3000](http://localhost:3000).
+
+### 2) Create an endpoint
+
+Click **Get a webhook URL**. You will be redirected to a URL like:
+
+```text
+http://localhost:3000/h/YOUR_ENDPOINT_ID
+```
+
+### 3) Send a test webhook
 
 ```bash
 curl -X POST http://localhost:3000/h/YOUR_ENDPOINT_ID \
@@ -25,21 +40,47 @@ curl -X POST http://localhost:3000/h/YOUR_ENDPOINT_ID \
   -d '{"hello":"world"}'
 ```
 
-It shows up in the dashboard instantly.
+You should see the request instantly in the dashboard.
 
-## Replay to localhost
+## Localhost replay and auto-forward
 
-In the dashboard, copy the relay command and run it in your project terminal:
+In the dashboard, open **Setup** and copy the relay command.
+Run it in your app terminal (where your local server runs):
 
 ```bash
 npx @hooklens/cli --endpoint YOUR_ENDPOINT_ID --port 4000
 ```
 
-When the dot turns green, you can replay and auto-forward to your local app.
+When relay status turns green:
+
+- **Replay** sends one captured event again
+- **Auto-forward** sends each new event to your local URL
+
+## Environment
+
+Main env vars:
+
+- `PORT` - app port (default `3000`)
+- `APP_URL` - public app URL used in generated webhook links
+- `DATABASE_URL` - sqlite/libsql connection string
+
+See `.env.example` for all available settings.
 
 ## Scripts
 
-- `pnpm dev` — start the app
-- `pnpm build` / `pnpm start` — production
-- `pnpm db:generate` / `pnpm db:migrate` — schema changes
-- `pnpm hooklens` — run the relay CLI locally (from repo root)
+- `pnpm dev` - start dev server
+- `pnpm build` - build for production
+- `pnpm start` - run production build
+- `pnpm db:generate` - generate migrations
+- `pnpm db:migrate` - apply migrations
+- `pnpm db:push` - push schema directly
+- `pnpm hooklens` - run relay CLI from this repo
+
+## Contributing
+
+Hooklens is open source and contributions are welcome.
+
+- Open an issue for bugs or feature ideas
+- Send a PR if you want to improve something
+
+Repo: [https://github.com/onyxdoe/hooklens](https://github.com/onyxdoe/hooklens)
