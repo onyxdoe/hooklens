@@ -149,6 +149,10 @@ async function runAutoForward(endpointId: string, requestId: string, forwardUrl:
 
 app.get('/', (c) => c.render('home', { appUrl: appUrl() }))
 
+app.get('/terms', (c) => c.render('terms', {}))
+
+app.get('/privacy', (c) => c.render('privacy', {}))
+
 app.get('/start', async (c) => {
   c.header('Cache-Control', 'no-store')
 

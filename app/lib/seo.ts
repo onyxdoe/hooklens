@@ -19,6 +19,22 @@ export function seoForPage(component: string) {
     }
   }
 
+  if (component === 'terms') {
+    return {
+      title: `Terms of Service · ${siteName}`,
+      description: 'Terms of Service for Hooklens webhook inspection and debugging.',
+      robots: 'index, follow',
+    }
+  }
+
+  if (component === 'privacy') {
+    return {
+      title: `Privacy Policy · ${siteName}`,
+      description: 'Privacy Policy describing how Hooklens collects and uses information.',
+      robots: 'index, follow',
+    }
+  }
+
   return {
     title: defaultTitle,
     description: defaultDescription,

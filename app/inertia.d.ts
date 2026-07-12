@@ -5,6 +5,8 @@ declare module '@hono/inertia' {
     home: {
       appUrl: string
     }
+    terms: Record<string, never>
+    privacy: Record<string, never>
     'endpoint/show': {
       appUrl: string
       endpoint: Endpoint

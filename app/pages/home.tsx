@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react'
 import { siGithub } from 'simple-icons'
 import { IntegrationMarquee } from '@/components/IntegrationMarquee'
 import { Logo } from '@/components/Logo'
+import { SiteFooter } from '@/components/SiteFooter'
 import { WebhookPreview } from '@/components/WebhookPreview'
 import { Button } from '@/components/ui/form/Button'
 
@@ -61,12 +62,14 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="relative">
+      <section className="relative border-b border-zinc-800">
         <div className="mx-auto max-w-6xl px-8 py-8 text-center lg:px-12">
           <p className="mb-6 text-sm text-zinc-500">Built for the webhooks you already use</p>
           <IntegrationMarquee />
         </div>
-      </footer>
+      </section>
+
+      <SiteFooter />
     </div>
   )
 }
