@@ -21,6 +21,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.44.2",
     "hono": "^4.8.3",
+    "lucide-react": "^1.24.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "simple-icons": "^16.25.0"

@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react'
 import { siGithub } from 'simple-icons'
 import { Contribute } from '@/components/Contribute'
+import { Features } from '@/components/Features'
 import { HowItWorks } from '@/components/HowItWorks'
 import { IntegrationMarquee } from '@/components/IntegrationMarquee'
 import { Logo } from '@/components/Logo'
@@ -72,6 +73,7 @@ export default function Home() {
       </section>
 
       <HowItWorks />
+      <Features />
       <Contribute />
       <SiteFooter />
     </div>
