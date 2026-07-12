@@ -42,9 +42,9 @@ export default function Show({ appUrl, endpoint, webhookUrl, requests: initialRe
   const [relayPort, setRelayPort] = useState('4000')
   const [relayPath, setRelayPath] = useState('/webhook')
   const [setupOpen, setSetupOpen] = useState(() => {
-    if (typeof window === 'undefined') return true
+    if (typeof window === 'undefined') return false
     const stored = window.localStorage.getItem(setupStorageKey(endpoint.id))
-    if (stored === null) return true
+    if (stored === null) return false
     return stored === 'true'
   })
   const [focusForwardUrl, setFocusForwardUrl] = useState(false)
