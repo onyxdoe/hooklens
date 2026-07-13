@@ -1,6 +1,6 @@
 # Hooklens
 
-You know how tough it can be to get webhooks working right, especially in local development? This project, Hooklens, gives you a simple way to catch, inspect, and even replay those webhooks straight to your local app. It's built to take the headache out of debugging webhooks from services like Stripe or GitHub, without needing complex tools like ngrok.
+You know how tough it can be to get webhooks working right, especially in local development? Hooklens gives you a simple way to catch, inspect, and even replay those webhooks straight to your local app. It's built to take the headache out of debugging webhooks from services like Stripe or GitHub, without needing complex tools like ngrok.
 
 ## Installation
 
@@ -92,7 +92,7 @@ This project is open-source. Please refer to the project's repository for specif
 
 ## Author Info
 
-- **X (Twitter):** [@onyx_doe](https://x.com/yourhandle)
+- **X (Twitter):** [@onyx_doe](https://x.com/onyx_doe)
 
 ---
 

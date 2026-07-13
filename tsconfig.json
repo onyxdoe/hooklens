@@ -15,5 +15,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["app", "src", "cli"]
+  "include": ["app", "src", "cli"],
+  "exclude": ["app/pages.gen.ts"]
 }

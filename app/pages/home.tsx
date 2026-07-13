@@ -1,17 +1,52 @@
-import { Link } from '@inertiajs/react'
+import { useEffect, useState } from 'react'
 import { siGithub } from 'simple-icons'
 import { Contribute } from '@/components/Contribute'
+import { CreateWebhookModal } from '@/components/CreateWebhookModal'
 import { Features } from '@/components/Features'
 import { HowItWorks } from '@/components/HowItWorks'
 import { IntegrationMarquee } from '@/components/IntegrationMarquee'
 import { Logo } from '@/components/Logo'
 import { SiteFooter } from '@/components/SiteFooter'
+import { UserAvatarMenu } from '@/components/UserAvatarMenu'
 import { WebhookPreview } from '@/components/WebhookPreview'
 import { Button } from '@/components/ui/form/Button'
+import type { AuthUser } from '@/types/auth'
+import { Link } from '@inertiajs/react'
 
 const githubUrl = 'https://github.com/onyxdoe/hooklens'
 
-export default function Home() {
+type HomeProps = {
+  appUrl: string
+  user: AuthUser | null
+}
+
+export default function Home({ user }: HomeProps) {
+  const [createOpen, setCreateOpen] = useState(false)
+  const [forceNameStep, setForceNameStep] = useState(false)
+  const [signInOpen, setSignInOpen] = useState(false)
+
+  useEffect(() => {
+    function onOpenCreate() {
+      openCreate()
+    }
+    window.addEventListener('hooklens:open-create', onOpenCreate)
+    return () => window.removeEventListener('hooklens:open-create', onOpenCreate)
+  }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('create') === '1') {
+      setForceNameStep(true)
+      setCreateOpen(true)
+      window.history.replaceState({}, '', '/')
+    }
+  }, [])
+
+  function openCreate() {
+    setForceNameStep(false)
+    setCreateOpen(true)
+  }
+
   return (
     <div className="bg-grid-shell relative min-h-screen">
       <div className="bg-grid-frame pointer-events-none absolute inset-y-0 left-1/2 w-full max-w-6xl -translate-x-1/2 border-x border-zinc-800" />
@@ -22,9 +57,16 @@ export default function Home() {
             <Logo />
           </Link>
           <div className="flex items-center gap-3">
-            <Link href="/start" className="hidden sm:inline-block">
-              <Button pill>Get a webhook URL →</Button>
-            </Link>
+            <Button pill className="hidden sm:inline-flex" onClick={openCreate}>
+              Get a webhook URL →
+            </Button>
+            {user ? (
+              <UserAvatarMenu user={user} onCreateWebhook={openCreate} />
+            ) : (
+              <Button variant="ghost" onClick={() => setSignInOpen(true)}>
+                Sign in
+              </Button>
+            )}
             <a
               href={githubUrl}
               target="_blank"
@@ -54,9 +96,9 @@ export default function Home() {
                 No localtunnel or ngrok needed to receive webhooks while developing locally. Inspect every event
                 and replay to your localhost as many times as you want.
               </p>
-              <Link href="/start" className="mt-10 inline-block">
-                <Button pill>Get a webhook URL →</Button>
-              </Link>
+              <Button pill className="mt-10" onClick={openCreate}>
+                Get a webhook URL →
+              </Button>
             </div>
             <div className="lg:w-2/5">
               <WebhookPreview />
@@ -76,6 +118,20 @@ export default function Home() {
       <Features />
       <Contribute />
       <SiteFooter />
+
+      <CreateWebhookModal
+        open={createOpen}
+        user={user}
+        forceNameStep={forceNameStep}
+        onClose={() => setCreateOpen(false)}
+      />
+      <CreateWebhookModal
+        open={signInOpen}
+        user={null}
+        signInOnly
+        callbackPath="/h"
+        onClose={() => setSignInOpen(false)}
+      />
     </div>
   )
 }

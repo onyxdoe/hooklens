@@ -19,6 +19,14 @@ export function seoForPage(component: string) {
     }
   }
 
+  if (component === 'endpoints/index') {
+    return {
+      title: `Webhook URLs · ${siteName}`,
+      description: 'Your Hooklens webhook URLs.',
+      robots: 'noindex, nofollow',
+    }
+  }
+
   if (component === 'terms') {
     return {
       title: `Terms of Service · ${siteName}`,

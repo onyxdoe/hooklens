@@ -1,11 +1,20 @@
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { baseColumns } from './base.js'
+import { user } from './auth-schema.js'
 
-export const endpoints = sqliteTable('endpoints', {
-  ...baseColumns(),
-  forwardEnabled: integer('forward_enabled', { mode: 'boolean' }).notNull().default(false),
-  forwardUrl: text('forward_url'),
-})
+export * from './auth-schema.js'
+
+export const endpoints = sqliteTable(
+  'endpoints',
+  {
+    ...baseColumns(),
+    name: text('name').notNull(),
+    userId: text('user_id').references(() => user.id, { onDelete: 'set null' }),
+    forwardEnabled: integer('forward_enabled', { mode: 'boolean' }).notNull().default(false),
+    forwardUrl: text('forward_url'),
+  },
+  (table) => [index('endpoints_user_id_idx').on(table.userId)],
+)
 
 export const requests = sqliteTable(
   'requests',
@@ -13,7 +22,7 @@ export const requests = sqliteTable(
     ...baseColumns(),
     endpointId: text('endpoint_id')
       .notNull()
-      .references(() => endpoints.id),
+      .references(() => endpoints.id, { onDelete: 'cascade' }),
     method: text('method').notNull(),
     headers: text('headers').notNull(),
     query: text('query').notNull(),

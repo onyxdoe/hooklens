@@ -1,5 +1,3 @@
-import { Link } from '@inertiajs/react'
-
 const steps = [
   {
     number: '01',
@@ -106,12 +104,13 @@ export function HowItWorks() {
           <Step {...step3} className="col-span-3" />
         </div>
 
-        <Link
-          href="/start"
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent('hooklens:open-create'))}
           className="mt-12 inline-block text-sm text-zinc-300 transition-colors hover:text-zinc-100"
         >
           Get a webhook URL →
-        </Link>
+        </button>
       </div>
     </section>
   )
