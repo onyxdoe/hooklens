@@ -58,9 +58,11 @@ export default function Home({ user }: HomeProps) {
             <Logo />
           </Link>
           <div className="flex items-center gap-3">
-            <Button pill className="hidden sm:inline-flex" onClick={openCreate}>
-              Get a webhook URL →
-            </Button>
+            <div className="hidden sm:block">
+              <Button pill onClick={openCreate}>
+                Get a webhook URL →
+              </Button>
+            </div>
             {user ? (
               <UserAvatarMenu user={user} onCreateWebhook={openCreate} />
             ) : (

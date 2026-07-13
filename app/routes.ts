@@ -7,6 +7,7 @@ import { db } from './db/index.js'
 import { endpoints, requests, type RequestView } from './db/schema.js'
 import { auth } from './lib/auth.js'
 import { buildCurl } from './lib/curl.js'
+import { cleanCaptureHeaders } from './lib/headers.js'
 import { replayRequest } from './lib/replay.js'
 import {
   clearRelayConnection,
@@ -109,10 +110,11 @@ async function captureRequest(c: Context, endpointId: string) {
   const { text: bodyText } = await readCaptureBody(c)
   const latencyMs = Date.now() - started
 
-  const headers: Record<string, string> = {}
+  const rawHeaders: Record<string, string> = {}
   c.req.raw.headers.forEach((value, key) => {
-    headers[key] = value
+    rawHeaders[key] = value
   })
+  const headers = cleanCaptureHeaders(rawHeaders)
 
   const query: Record<string, string> = {}
   const url = new URL(c.req.url)
@@ -319,6 +321,24 @@ app.get(
 
 app.get('/h/:id', async (c) => {
   const endpointId = c.req.param('id')
+  const url = new URL(c.req.url)
+  const hubMode = url.searchParams.get('hub.mode')
+  const hubChallenge = url.searchParams.get('hub.challenge')
+  const hubVerifyToken = url.searchParams.get('hub.verify_token')
+
+  if (hubMode === 'subscribe' && hubChallenge !== null) {
+    const endpointRows = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1)
+    const endpoint = endpointRows[0]
+    if (!endpoint) return c.json({ error: 'Not found' }, 404)
+
+    if (endpoint.verifyEnabled && endpoint.verifyToken) {
+      if (hubVerifyToken === endpoint.verifyToken) {
+        return c.text(hubChallenge, 200)
+      }
+      return c.text('Forbidden', 403)
+    }
+  }
+
   const accept = c.req.header('Accept') ?? ''
   const wantsHtml = accept.includes('text/html')
   if (!wantsHtml) {
@@ -345,6 +365,8 @@ app.get('/h/:id', async (c) => {
         userId: endpoint.userId,
         forwardEnabled: false,
         forwardUrl: null,
+        verifyEnabled: false,
+        verifyToken: null,
         createdAt: endpoint.createdAt,
         updatedAt: endpoint.updatedAt,
       },
@@ -387,11 +409,27 @@ app.patch('/h/:id/settings', async (c) => {
     return c.json({ error: 'Unauthorized' }, 401)
   }
 
-  const body = await c.req.json<{ forwardEnabled: boolean; forwardUrl: string | null }>()
-  await db
-    .update(endpoints)
-    .set({ forwardEnabled: body.forwardEnabled, forwardUrl: body.forwardUrl })
-    .where(eq(endpoints.id, endpointId))
+  const body = await c.req.json<{
+    forwardEnabled?: boolean
+    forwardUrl?: string | null
+    verifyEnabled?: boolean
+    verifyToken?: string | null
+  }>()
+
+  const patch: {
+    forwardEnabled?: boolean
+    forwardUrl?: string | null
+    verifyEnabled?: boolean
+    verifyToken?: string | null
+  } = {}
+  if ('forwardEnabled' in body) patch.forwardEnabled = body.forwardEnabled
+  if ('forwardUrl' in body) patch.forwardUrl = body.forwardUrl
+  if ('verifyEnabled' in body) patch.verifyEnabled = body.verifyEnabled
+  if ('verifyToken' in body) patch.verifyToken = body.verifyToken
+
+  if (Object.keys(patch).length > 0) {
+    await db.update(endpoints).set(patch).where(eq(endpoints.id, endpointId))
+  }
 
   return c.json({ ok: true })
 })

@@ -1,17 +1,7 @@
 import { createId } from '@paralleldrive/cuid2'
 import type { RequestView } from '../db/schema.js'
+import { cleanCaptureHeaders } from './headers.js'
 import { dispatchRelayJob } from './relay.js'
-
-const HOP_BY_HOP = new Set(['host', 'connection', 'content-length', 'transfer-encoding'])
-
-function cleanHeaders(headers: Record<string, string>) {
-  const result: Record<string, string> = {}
-  for (const [key, value] of Object.entries(headers)) {
-    if (HOP_BY_HOP.has(key.toLowerCase())) continue
-    result[key] = value
-  }
-  return result
-}
 
 function isLocalDestination(url: string) {
   try {
@@ -41,7 +31,7 @@ export async function replayRequest(
   destinationUrl: string,
   endpointId: string,
 ): Promise<ReplayResult> {
-  const headers = cleanHeaders(request.headers)
+  const headers = cleanCaptureHeaders(request.headers)
   const started = Date.now()
 
   if (isLocalDestination(destinationUrl)) {

@@ -12,6 +12,8 @@ export const endpoints = sqliteTable(
     userId: text('user_id').references(() => user.id, { onDelete: 'set null' }),
     forwardEnabled: integer('forward_enabled', { mode: 'boolean' }).notNull().default(false),
     forwardUrl: text('forward_url'),
+    verifyEnabled: integer('verify_enabled', { mode: 'boolean' }).notNull().default(false),
+    verifyToken: text('verify_token'),
   },
   (table) => [index('endpoints_user_id_idx').on(table.userId)],
 )

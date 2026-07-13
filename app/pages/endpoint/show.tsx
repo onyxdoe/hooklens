@@ -53,6 +53,8 @@ export default function Show({
   const [relayConnected, setRelayConnected] = useState(initialRelay)
   const [forwardEnabled, setForwardEnabled] = useState(endpoint.forwardEnabled)
   const [forwardUrl, setForwardUrl] = useState(endpoint.forwardUrl)
+  const [verifyEnabled, setVerifyEnabled] = useState(endpoint.verifyEnabled)
+  const [verifyToken, setVerifyToken] = useState(endpoint.verifyToken)
   const [relayPort, setRelayPort] = useState('4000')
   const [relayPath, setRelayPath] = useState('/webhook')
   const [setupOpen, setSetupOpen] = useState(() => {
@@ -208,6 +210,8 @@ export default function Show({
             relayPath={relayPath}
             forwardEnabled={forwardEnabled}
             forwardUrl={forwardUrl}
+            verifyEnabled={verifyEnabled}
+            verifyToken={verifyToken}
             localUrl={localUrl}
             focusForwardUrl={focusForwardUrl}
             onFocusForwardUrlComplete={() => setFocusForwardUrl(false)}
@@ -216,6 +220,10 @@ export default function Show({
             onForwardUpdate={({ forwardEnabled: enabled, forwardUrl: url }) => {
               setForwardEnabled(enabled)
               setForwardUrl(url)
+            }}
+            onVerifyUpdate={({ verifyEnabled: enabled, verifyToken: token }) => {
+              setVerifyEnabled(enabled)
+              setVerifyToken(token)
             }}
           />
         ) : null}
