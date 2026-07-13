@@ -1,8 +1,34 @@
+import { useEffect, useRef } from 'react'
 import { siGithub } from 'simple-icons'
 
 const githubUrl = 'https://github.com/onyxdoe/hooklens'
+const happrScriptSrc = 'https://myhappr.com/widget.js'
 
 export function Contribute() {
+  const happrRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const host = happrRef.current
+    if (!host) return
+
+    host.replaceChildren()
+
+    const script = document.createElement('script')
+    script.src = happrScriptSrc
+    script.async = true
+    script.dataset.username = 'doe'
+    script.dataset.color = '#FF5E5E'
+    script.dataset.textColor = '#FFFFFF'
+    script.dataset.radius = '9999px'
+    script.dataset.text = 'Buy me a coffee'
+    script.dataset.title = 'Buy me a coffee'
+    host.appendChild(script)
+
+    return () => {
+      host.replaceChildren()
+    }
+  }, [])
+
   return (
     <section className="relative border-b border-zinc-800">
       <div className="mx-auto max-w-6xl px-8 py-16 lg:px-12 lg:py-24">
@@ -15,7 +41,8 @@ export function Contribute() {
               Hooklens is open source. If something is rough, open an issue. If you want to fix it, send a
               PR. Have an idea for a feature? Build it and share it. Stars help others find it.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div ref={happrRef} />
               <a
                 href={githubUrl}
                 target="_blank"
