@@ -3,6 +3,7 @@ import { siGithub } from 'simple-icons'
 import { Contribute } from '@/components/Contribute'
 import { CreateWebhookModal } from '@/components/CreateWebhookModal'
 import { Features } from '@/components/Features'
+import { HapprSupport } from '@/components/HapprSupport'
 import { HowItWorks } from '@/components/HowItWorks'
 import { IntegrationMarquee } from '@/components/IntegrationMarquee'
 import { Logo } from '@/components/Logo'
@@ -116,7 +117,7 @@ export default function Home({ user }: HomeProps) {
 
       <HowItWorks />
       <Features />
-      <Contribute />
+      <Contribute supportSlot={<HapprSupport />} />
       <SiteFooter />
 
       <CreateWebhookModal
