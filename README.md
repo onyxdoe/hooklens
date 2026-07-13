@@ -19,7 +19,7 @@ Let's get Hooklens running on your machine.
   ```bash
     cp .env.example .env
   ```
-    You can adjust settings like `PORT` or `DATABASE_URL` in the `.env` file if needed.
+  You can adjust settings like `PORT` or `DATABASE_URL` in the `.env` file if needed.
 4. **Run Database Migrations:**
   ```bash
     pnpm db:migrate
@@ -28,7 +28,7 @@ Let's get Hooklens running on your machine.
   ```bash
     pnpm dev
   ```
-    Now, open your browser to [http://localhost:3000](http://localhost:3000) to see Hooklens in action.
+  Now, open your browser to [http://localhost:3000](http://localhost:3000) to see Hooklens in action.
 
 ## Usage
 
@@ -40,6 +40,7 @@ Here’s how you can use Hooklens to streamline your webhook debugging:
   http://localhost:3000/h/abc123xyz
   ```
   This is your new Hooklens endpoint. Copy it and paste it into your webhook provider (e.g., Stripe, GitHub, your own backend).
+
 2. **Send a Test Webhook:**
   To see it working, send a simple `POST` request to your new URL:
     ```bash
