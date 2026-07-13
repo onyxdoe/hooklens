@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRightLeft,
   Code2,
+  FolderOpen,
   Link2,
   ListChecks,
   RefreshCw,
@@ -44,6 +45,12 @@ const features: {
     body: 'Easily enable or disable auto-forwarding and set a custom destination URL for your webhooks.',
     icon: Settings2,
     iconClass: 'text-orange-400',
+  },
+  {
+    title: 'Saved Webhook URLs',
+    body: 'Sign in to keep your webhook URLs in one place. Name them, track request counts, and delete a URL with all of its captured requests when you are done.',
+    icon: FolderOpen,
+    iconClass: 'text-violet-400',
   },
   {
     title: 'Request Management',
