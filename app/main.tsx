@@ -79,8 +79,8 @@ async function main() {
     throw error
   })
 
-  server.listen(port, () => {
-    console.log(`Hooklens listening on http://localhost:${port}`)
+  server.listen(port, '0.0.0.0', () => {
+    console.log(`Hooklens listening on http://0.0.0.0:${port}`)
   })
 }
 
